@@ -80,7 +80,7 @@ RESPONSE_FORMAT = {
 
 def main(problem_file, result_file, model_name):
     # 進捗表示
-    print(f"Model: {model_name}, Problem FIle: {problem_file}")
+    print(f"Model: {model_name}, Problem File: {problem_file}")
 
     # APIクライアント設定
     client = create_ollama_model()
