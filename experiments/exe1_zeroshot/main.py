@@ -4,7 +4,7 @@ import sys
 import json
 
 THIS_FILE = Path(__file__).resolve()
-PROJECT_ROOT = THIS_FILE.parents[2] # law-llm-experimentsのルートディレクトリ
+PROJECT_ROOT = THIS_FILE.parents[2] # ルートディレクトリ
 SRC_ROOT = PROJECT_ROOT / 'src' # srcディレクトリ
 DATA_ROOT = PROJECT_ROOT / 'data' # dataディレクトリ
 RESULTS_ROOT = PROJECT_ROOT / 'results' # resultsディレクトリ
@@ -41,12 +41,12 @@ RESULT_FILE = [
 
 # プロンプト設定
 SYSTEM_PROMPT = """
-    "あなたは日本の法律に詳しい法律家です。"
-    "出力は必ずJSON形式のみで返し、他のテキストは一切含めずに回答してください。"
+    あなたは日本の法律に詳しい法律家です。
+    出力は必ずJSON形式のみで、提示したJSON Schemaに従い、他のテキストは一切含めずに回答してください。
 """.strip()
 USER_PROMPT = """
-    "日本の司法試験の民法に関する択一回答式問題です。"
-    "記述(t2)が正しいかどうかを判定し、その回答根拠となる民法条文全文を正確に示してください。"
+    日本の司法試験の民法に関する択一回答式問題です。
+    記述(t2)が正しいかどうかを判定し、その回答根拠となる民法条文の該当箇所を引用して示してください。
 
     # 法律に関する記述(t2)
     {t2_text}
@@ -67,14 +67,9 @@ RESPONSE_FORMAT = {
                     "enum": ["Y", "N"],
                 },
                 "reason_articles": {
-                    "type": "object",
-                    "minProperties": 1,
-                    "additionalProperties": {
-                        "type": "string",
-                        "minLength": 10,
-                        "description": "当該条文の本文のみ（解説・結論・評価は禁止）。"
-                    },
-                    "description": "キーに条文番号（例: 第3条）、値に条文本文のみを対応させる。"
+                    "type": "string",
+                    "minLength": 15,    # 最低15文字以上にすることで、"民法◯条"のような不十分な回答を防ぐ
+                    "description": "判断の根拠となった法律の条文全文を（第◯条 ①~ ②~）のように引用。民法以外は記載しないこと。",
                 },
             },
             "required": ["judgment", "reason_articles"],
@@ -107,8 +102,8 @@ def main(problem_file, result_file, model_name):
             # 各問題の情報抽出
             problem_id = problem.get("id")
             correct_label = problem.get("correct_label")
-            reference_text = problem.get("t1")
-            problem_text = problem.get("t2")
+            reference_text = problem["t1"]
+            problem_text = problem["t2"]
 
             # ゼロショットで問題を解く
             model_output = solve_problems(
@@ -168,7 +163,3 @@ if __name__ == "__main__":
             result_file = RESULT_FILE[idx]
             idx += 1
             main(problem_file=problem_file, result_file=result_file, model_name=model_name)
-
-
-    
-

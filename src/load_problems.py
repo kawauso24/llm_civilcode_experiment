@@ -12,6 +12,7 @@ def extract_problems_from_xml(xml_file):
         problems.append({
             "id": problem.get("id"),    # 各問題のID取得
             "correct_label": problem.get("label"),  # 各問題の正解ラベル取得
+            "t1": (problem.findtext("t1") or "").strip(),  # 参考条文取得と前後の空白削除
             "t2": (problem.findtext("t2") or "").strip(),  # 問題文取得と前後の空白削除
         })
 

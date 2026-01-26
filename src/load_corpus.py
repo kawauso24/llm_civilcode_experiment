@@ -10,17 +10,9 @@ def extract_articles_from_xml(xml_file):
     tree = ET.parse(xml_file)
     root = tree.getroot()
 
-    # LawBodyを探す(e-Govコーパス形式)
-    # law_body = root.find('.//LawBody')
-
     articles = []
-
-    # メインの条文を抽出(e-Govコーパス形式)
-    # for article in law_body.findall(".//MainProvision//Article"):
-    #     articles.append(article_to_record(article))
-
     # メインの条文を抽出(COLIEEコーパス形式)
-    for article in root.findall(".//article"):
+    for article in root.findall("Article"):
         articles.append(article_to_record(article))
     
     return articles
@@ -28,17 +20,17 @@ def extract_articles_from_xml(xml_file):
 # 各条文要素をdictに変換する関数
 def article_to_record(article_elem):
     # 条文番号抽出
-    num = article_elem.get('num_ar')
+    num = article_elem.get('num')
 
-    # 段落 + 文をすべて連結
-    sentences = []
-    for sent in article_elem.findall(".//display"):
-        if sent.text:
-            sentences.append(sent.text.strip())
+    # キャプションの抽出(存在する場合)
+    caption_elem = article_elem.find("caption")
+    caption = caption_elem.text.strip() if caption_elem is not None and caption_elem.text else ""
 
-    text = " ".join(sentences)
+    # 条文テキスト抽出
+    text_elem = article_elem.find("text")
+    text = text_elem.text.strip() if text_elem is not None and text_elem.text else ""
 
     return {
         "num": num,
-        "text": text,
+        "text": caption + text,
     }
