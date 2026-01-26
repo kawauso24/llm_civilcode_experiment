@@ -1,0 +1,15 @@
+# macOS
+.DS_Store
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+
+# Editor/project files
+.vscode/
+
+# Ignore XML files across the repository
+data
+
+# Ignore environment files
+.env

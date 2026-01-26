@@ -1,0 +1,13 @@
+# Requirements for law-llm-experiments
+# Minimal dependencies required to run the provided scripts
+openai>=1.0.0
+python-dotenv>=1.0.0
+
+# If you use a virtual environment, install with:
+# python -m pip install -r requirements.txt
+
+# Additional libraries used in the workspace / during development
+# - fugashi: Japanese tokenizer (wrapper around MeCab)
+# - rank-bm25: simple BM25 implementation for ranking
+fugashi
+rank-bm25
