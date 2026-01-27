@@ -150,18 +150,19 @@ def main(problem_file, reference_file, result_file, model_name, m):
                 all_articles,
                 problem_text,
                 m,
+                source="BM25",
             )
             
             # 正解条文集合を取得
             reference_article_nums = all_reference[problem_id]
-            print(reference_article_nums)
+            # print(reference_article_nums)
 
             # 抽出した条文の条文集合を取得
             retrieved_article_nums = set()
             for article in retrieved_articles:
                 article_num = article["article"]["num"]
                 retrieved_article_nums.add(article_num)
-            print(retrieved_article_nums)
+            # print(retrieved_article_nums)
             
             # IR評価の計算
             ir_metrics = compute_metrics(retrieved_article_nums, reference_article_nums)

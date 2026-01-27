@@ -1,0 +1,33 @@
+{
+    "first_trial": {
+        "judge_summary": {
+            "num_problems": 109,
+            "num_correct": 0,
+            "num_incorrect": 0,
+            "accuracy": 0.0,
+            "num_correct_answer_correct_retrieval": 0,
+            "correct_answer_correct_retrieval_rate": 0.0
+        },
+        "retrieval_summary": {
+            "macro_f2": 0.1576,
+            "macro_precision": 0.0609,
+            "macro_recall": 0.2752
+        }
+    },
+    "second_trial": {
+        "judge_summary": {
+            "num_problems": 109,
+            "num_correct": 0,
+            "num_incorrect": 0,
+            "accuracy": 0.0,
+            "num_correct_answer_correct_retrieval": 0,
+            "correct_answer_correct_retrieval_rate": 0.0
+        },
+        "retrieval_summary": {
+            "macro_f2": 0.0,
+            "macro_precision": 0.0,
+            "macro_recall": 0.0
+        }
+    },
+    "problems_results": []
+}
