@@ -88,7 +88,7 @@ SYSTEM_PROMPT = """
 USER_PROMPT_FIRST = """
     日本の司法試験の民法に関する択一回答式問題です。
     与えられた条文情報のみを利用して記述(t2)が正しいかどうかを判定してください。
-    また実際に判定に利用した条文番号を与えた条文番号リストの中から選んでリストとして回答してください。
+    また実際に判定に利用した条文番号を、与えられた参照条文番号のリストから選んで回答してください。
 
     # 参照する条文情報
     {retrieved_articles}
@@ -124,10 +124,10 @@ def return_response_schema(articles_ids_set):
                     },
                     "selected_articles": {
                         "type": "array",
-                        "description": "参照した条文番号のリストをarrayで回答してください.",
+                        "description": "与えられた条文番号リストの中から実際に回答に利用した条文番号を回答してください.",
+                        "minItems": 1,  # 最小1件以上を強制
                         "items": {
                             "type": "integer",
-                            "minItems": 1,
                             "enum": list(articles_ids_set)
                         },
                     },
@@ -162,7 +162,7 @@ RESPONSE_FORMAT_SECOND = {
 
 def main(problem_file, reference_file, result_file, llmoutput_file, model_name, m):
     # 進捗表示
-    print(f"Model: {model_name}, Problem File: {problem_file}, M_Value: {m}, LLM Output File: {llmoutput_file}")
+    print(f"Model: {model_name}, Problem File: {problem_file}, M_Value: {m}, LLM Output File: {llmoutput_file}, Result File: {result_file}")
 
     # APIクライアント設定
     client = create_ollama_model()
@@ -201,9 +201,9 @@ def main(problem_file, reference_file, result_file, llmoutput_file, model_name, 
     macro_first_precision = 0.0
     macro_first_recall = 0.0
     num_first_correct_retrieval = 0
-    num_basebm25 = 0
-    num_llmguide = 0
-    num_junyo = 0
+    macro_bm25 = 0.0
+    macro_llmoutput = 0.0
+    macro_junyo = 0.0
     # 条文検索に関する統計情報初期化 (2回目)
     macro_second_f2 = 0.0
     macro_second_precision = 0.0
@@ -213,6 +213,11 @@ def main(problem_file, reference_file, result_file, llmoutput_file, model_name, 
     # 各問題に対して検索・推論を実行
     for problem in problems:
         try:
+            # 各問題に対する条文ソース別正解条文数カウント初期化
+            num_basebm25 = 0
+            num_llmguide = 0
+            num_junyo = 0
+
             # 問題数のカウントアップ
             num_problems += 1
 
@@ -243,6 +248,9 @@ def main(problem_file, reference_file, result_file, llmoutput_file, model_name, 
                 source="LLMoutput",
             )
 
+            # 正解条文集合を取得
+            reference_article_nums = all_reference[problem_id]
+
             # 問題文による検索+LLM出力による検索の組み合わせで取得した条文リストに準用条文を追加
             raw_retrieved_articles = []
             raw_retrieved_articles_set = set()
@@ -254,8 +262,16 @@ def main(problem_file, reference_file, result_file, llmoutput_file, model_name, 
             )
             print(raw_retrieved_articles_set)
 
-            # 正解条文集合を取得
-            reference_article_nums = all_reference[problem_id]
+            # 抽出した条文のソースをカウント
+            for article in raw_retrieved_articles:
+                source = article.get("source", "")
+                article_num = article["article"]["num"]
+                if (source == "BM25") and (article_num in reference_article_nums):
+                    num_basebm25 += 1
+                elif (source == "LLMoutput") and (article_num in reference_article_nums):
+                    num_llmguide += 1
+                elif (source == "Junyo") and (article_num in reference_article_nums):
+                    num_junyo += 1
 
             # IR評価の計算 (1回目)
             first_ir_metrics = compute_metrics(raw_retrieved_articles_set, reference_article_nums)
@@ -267,6 +283,9 @@ def main(problem_file, reference_file, result_file, llmoutput_file, model_name, 
             macro_first_f2 += first_f2
             macro_first_precision += first_precision
             macro_first_recall += first_recall
+            macro_bm25 += (num_basebm25 / len(reference_article_nums)) if len(reference_article_nums) > 0 else 0.0
+            macro_llmoutput += (num_llmguide / len(reference_article_nums)) if len(reference_article_nums) > 0 else 0.0
+            macro_junyo += (num_junyo / len(reference_article_nums)) if len(reference_article_nums) > 0 else 0.0
 
             # 正解条文をすべて抽出できたかどうか判定 (1回目)
             is_first_correct_retrieval = (reference_article_nums.issubset(raw_retrieved_articles_set))
@@ -358,13 +377,23 @@ def main(problem_file, reference_file, result_file, llmoutput_file, model_name, 
                     "model_output": model_first_output,
                     "correct": is_first_correct,
                     "raw_retrieved_articles": raw_retrieved_articles,
-                    "raw_retrieved_articles_set": raw_retrieved_articles_set,
+                    "raw_retrieved_articles_set": list(raw_retrieved_articles_set),
+                    "source_counts": {
+                        "BM25": num_basebm25,
+                        "LLMoutput": num_llmguide,
+                        "Junyo": num_junyo,
+                    },
+                    "source_coverage": {
+                        "BM25": (num_basebm25 / len(reference_article_nums)) if len(reference_article_nums) > 0 else 0.0,
+                        "LLMoutput": (num_llmguide / len(reference_article_nums)) if len(reference_article_nums) > 0 else 0.0,
+                        "Junyo": (num_junyo / len(reference_article_nums)) if len(reference_article_nums) > 0 else 0.0,
+                    },
                 },
                 "second_trial": {
                     "model_output": model_second_output,
                     "correct": is_second_correct,
                     "selected_articles": selected_articles,
-                    "selected_articles_set": selected_articles_set,
+                    "selected_articles_set": list(selected_articles_set),
                 }
             })
 
@@ -388,6 +417,11 @@ def main(problem_file, reference_file, result_file, llmoutput_file, model_name, 
                 "macro_f2": round((macro_first_f2 / num_problems) if num_problems > 0 else 0.0, 4),
                 "macro_precision": round((macro_first_precision / num_problems) if num_problems > 0 else 0.0, 4),
                 "macro_recall": round((macro_first_recall / num_problems) if num_problems > 0 else 0.0, 4),
+                "source_coverage": {
+                    "macro_BM25": round((macro_bm25 / num_problems) if num_problems > 0 else 0.0, 4),
+                    "macro_LLMoutput": round((macro_llmoutput / num_problems) if num_problems > 0 else 0.0, 4),
+                    "macro_Junyo": round((macro_junyo / num_problems) if num_problems > 0 else 0.0, 4),
+                }
             },
         },
         "second_trial": {

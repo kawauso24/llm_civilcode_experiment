@@ -17,7 +17,7 @@ from gemini_client import create_gemini_model_client
 client = create_gemini_model_client()
 
 # モデル名設定
-MODEL_NAME = "gemini-3-pro-preview"
+MODEL_NAME = "gemini-3-flash-preview"
 
 # 結果ファイルのインポート
 INPUT_FILE = [
@@ -38,7 +38,7 @@ OUTPUT_FILE = [
 # プロンプト設定
 SYSTEM_PROMPT = (
     "あなたは日本の法律に詳しい法律専門家です。"
-    "出力は必ずJSON形式のみで返し、他のテキストは一切含めないでください。"
+    "出力は必ずJSON形式のみで、提示したJSON Schemaに従い、他のテキストは一切含めずに回答してください。"
 )
 
 USER_PROMPT = """
