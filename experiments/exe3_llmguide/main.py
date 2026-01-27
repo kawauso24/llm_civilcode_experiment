@@ -127,7 +127,7 @@ def return_response_schema(articles_ids_set):
                         "description": "参照した条文番号のリストをarrayで回答してください.",
                         "items": {
                             "type": "integer",
-                            "minimum": 1,
+                            "minItems": 1,
                             "enum": list(articles_ids_set)
                         },
                     },
