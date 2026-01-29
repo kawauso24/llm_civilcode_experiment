@@ -1,0 +1,12 @@
+{
+  "input_file": "/home/sakakibaragota/llm_civilcode_experiment/results/exe1_zeroshot/llama4/R06_exe1_results_llama4.json",
+  "output_jsonl": "/home/sakakibaragota/llm_civilcode_experiment/results/exe1_zeroshot_eval/llama4/R06_exe1_eval_llama4.jsonl",
+  "processed_new": 73,
+  "skipped_existing": 0,
+  "gemini_judge_1": 3,
+  "gemini_judge_2": 14,
+  "gemini_judge_3": 20,
+  "gemini_judge_4": 36,
+  "total_judged_in_this_run": 73,
+  "reason_accuracy_percent_in_this_run": "23.29%"
+}

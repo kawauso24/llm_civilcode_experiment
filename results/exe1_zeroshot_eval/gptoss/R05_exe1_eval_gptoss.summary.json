@@ -1,0 +1,12 @@
+{
+  "input_file": "/home/sakakibaragota/llm_civilcode_experiment/results/exe1_zeroshot/gptoss/R05_exe1_results_gptoss.json",
+  "output_jsonl": "/home/sakakibaragota/llm_civilcode_experiment/results/exe1_zeroshot_eval/gptoss/R05_exe1_eval_gptoss.jsonl",
+  "processed_new": 109,
+  "skipped_existing": 0,
+  "gemini_judge_1": 1,
+  "gemini_judge_2": 23,
+  "gemini_judge_3": 7,
+  "gemini_judge_4": 78,
+  "total_judged_in_this_run": 109,
+  "reason_accuracy_percent_in_this_run": "22.02%"
+}

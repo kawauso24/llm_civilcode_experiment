@@ -2,6 +2,8 @@
 """
 モデルが出力した根拠条文をGeminiに評価させるモジュール
 """
+import json
+
 def eval_reason(client, model, model_reason, correct_reason, system_prompt, user_prompt, response_schema):
     # プロンプトをまとめる
     prompt = user_prompt.format(
