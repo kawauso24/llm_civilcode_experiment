@@ -15,7 +15,7 @@ Legal entailment for civil code questions requires identifying the correct statu
 
 ### Proposed Approach
 
-[![System figure](system_figure_thesis.png)](system_figure_thesis.png)
+[![System figure](system_figure.png)](system_figure.png)
 
 1. **End-to-End baseline**: LLM answers without retrieval (Experiment 1).
 2. **BM25 RAG**: retrieve top-k statutes with BM25 and provide them as context (Experiment 2).
