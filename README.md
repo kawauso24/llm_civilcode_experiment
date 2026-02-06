@@ -13,7 +13,11 @@ This repository contains the code and experiment results for an end-to-end legal
 
 Legal entailment for civil code questions requires identifying the correct statutes and reasoning over them. Naive end-to-end LLM answers can hallucinate statutes or omit necessary cross-references (mutatis mutandis), degrading reliability.
 
-### Proposed Approach (High-Level)
+### Proposed Approach
+
+<embed src="system_figure_thesis.pdf" type="application/pdf" width="100%" height="600px" />
+
+If the embedded PDF does not render in your viewer, open it directly: `system_figure_thesis.pdf`.
 
 1. **End-to-End baseline**: LLM answers without retrieval (Experiment 1).
 2. **BM25 RAG**: retrieve top-k statutes with BM25 and provide them as context (Experiment 2).
