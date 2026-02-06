@@ -60,7 +60,7 @@ Experiments run local models via Ollama with an OpenAI-compatible API. Runs were
 | R06     | llama4  | 10 | 0.3401 | 0.1027    | 0.8607 | 73.97    |
 | R06     | llama4  | 15 | 0.2621 | 0.0703    | 0.8881 | 79.45    |
 
-### Experiment 3: LLM-Guided Retrieval + Selection
+### Experiment 3: LLM-Guided Retrieval + Add Junyo Articles
 
 | Dataset | Model   | k | F2     | Precision | Recall | BM25  | LLM  | Junyo | Accuracy |
 |---------|---------|---|--------|-----------|--------|-------|------|-------|----------|
@@ -77,7 +77,7 @@ Experiments run local models via Ollama with an OpenAI-compatible API. Runs were
 | R06     | llama4  | 2 | 0.4287 | 0.1535    | 0.8584 | 79.22 | 3.20 | 3.42  | 73.97    |
 | R06     | llama4  | 3 | 0.4199 | 0.1448    | 0.8927 | 79.22 | 6.62 | 3.42  | 75.34    |
 
-### Experiment 3 (LLM-Only Selection Results)
+### Experiment 3 (LLM Selection Results)
 
 | Dataset | Model   | k | F2     | Precision | Recall | Accuracy |
 |---------|---------|---|--------|-----------|--------|----------|
