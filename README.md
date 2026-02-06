@@ -27,6 +27,12 @@ Legal entailment for civil code questions requires identifying the correct statu
 - **R06 (COLIEE 2025)**: 73 problems.
 - Dataset files are not included in this repository. See the COLIEE website for access.
 
+## References (COLIEE)
+
+1. Rabelo, J., Kim, M. Y., Goebel, R., Yoshioka, M., Kano, Y., & Satoh, K. (2022). Overview and Discussion of the Competition on Legal Information Extraction/Entailment (COLIEE) 2021. Pages 111-133. DOI: 10.1007/s12626-022-00105-z
+2. Randy Goebel, Yoshinobu Kano, Mi-Young Kim, Juliano Rabelo, Ken Satoh, and Masaharu Yoshioka. 2024. Overview of&nbsp;Benchmark Datasets and&nbsp;Methods for&nbsp;the&nbsp;Legal Information Extraction/Entailment Competition (COLIEE) 2024. In New Frontiers in Artificial Intelligence: JSAI International Symposium on Artificial Intelligence, JSAI-isAI 2024, Hamamatsu, Japan, May 28–29, 2024, Proceedings. Springer-Verlag, Berlin, Heidelberg, 109–124. https://doi.org/10.1007/978-981-97-3076-6_8
+3. Randy Goebel, Yoshinobu Kano, Mi-Young Kim, Calum Kwan, Ken Satoh, Hiroaki Yamada, and Masaharu Yoshioka. 2026. An Overview of the COLIEE 2025 Competition: Legal Case Law and Statute Law Information Retrieval and Entailment. In Proceedings of the Twentieth International Conference on Artificial Intelligence and Law (ICAIL '25). Association for Computing Machinery, New York, NY, USA, 506–515. https://doi.org/10.1145/3769126.3785016
+
 ## Models
 
 Experiments run local models via Ollama with an OpenAI-compatible API. Runs were performed on a Mac Studio (M3 Ultra, 512GB).
