@@ -151,11 +151,11 @@ source .venv/bin/activate
 python -m pip install -r requirements.txt
 ```
 
-If you use LLM APIs, set the required environment variables in a `.env` file (examples inferred from the code):
+If you use LLM APIs, set the required environment variables in a `.env` file:
 
 ```
 GEMINI_API_KEY=...
-OLLAMA_URL=http://localhost:11434/v1
+OLLAMA_URL=...
 OLLAMA_API_KEY=...
 ```
 
