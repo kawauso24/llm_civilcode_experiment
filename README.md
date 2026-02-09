@@ -25,7 +25,20 @@ Legal entailment for civil code questions requires identifying the correct statu
 
 - **R05 (COLIEE 2024)**: 109 problems.
 - **R06 (COLIEE 2025)**: 73 problems.
-- Dataset files are not included in this repository. See the COLIEE website for access.
+- Dataset files are not included in this repository due to copyright. You must create the `data/` directory and place the required files there. See the COLIEE website for access.
+
+Required `data/` layout 
+```
+data/
+  coliee_train/
+    riteval_R05_jp.xml
+    riteval_R06_jp.xml
+  coliee_test/
+    simple_R05_jp.xml
+    simple_R06_jp.xml
+  coliee_corpus/
+    civil.xml
+```
 
 ## References (COLIEE)
 
@@ -107,6 +120,28 @@ Experiments run local models via Ollama with an OpenAI-compatible API. Runs were
 - `experiments/`: experiment entry points (exp1_zeroshot, exp2_basebm25, exp3_llmguide).
 - `src/`: dataset loading, BM25 retrieval, LLM clients, and evaluation utilities.
 - `results/`: saved outputs from experiments.
+- `data/`: dataset files (not included; see Datasets section).
+
+Directory layout:
+
+```
+.
+├── README.md
+├── requirements.txt
+├── system_figure.png
+├── experiments/
+│   ├── exp1_zeroshot/
+│   ├── exp1_zeroshot_eval/
+│   ├── exp2_basebm25/
+│   └── exp3_llmguide/
+├── results/
+│   ├── exp1_zeroshot/
+│   ├── exp1_zeroshot_eval/
+│   ├── exp2_basebm25/
+│   └── exp3_llmguide/
+├── src/
+└── data/ (not included)
+```
 
 ## Setup
 
