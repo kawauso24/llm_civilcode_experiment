@@ -166,3 +166,8 @@ python experiments/exp1_zeroshot/main.py
 python experiments/exp2_basebm25/main.py
 python experiments/exp3_llmguide/main.py
 ```
+
+## License
+MIT License (see `LICENSE`).
+
+Note: This repository does not include datasets or model weights. They are subject to their respective licenses/terms.
