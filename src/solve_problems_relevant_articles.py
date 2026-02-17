@@ -36,5 +36,5 @@ def solve_problems(client, model_name, retrieved_articles, problem_text, system_
         response_format=response_format,
     )
     model_output = response.choices[0].message.content
-    print(model_output)
+    # print(model_output)
     return json.loads(model_output)
