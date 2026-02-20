@@ -37,10 +37,10 @@ from solve_problems_zeroshot import solve_zeroshot_problems
 MODEL_NAME = "llama4:128x17b"
 
 # ベースで取得する条文数設定
-BASE_QUERY_NUM = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+BASE_QUERY_NUM = 10
 
 # クエリ拡張のためにさらに取得する条文数設定
-QUERY_EXPAND_NUM = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+QUERY_EXPAND_NUM = 10
 
 # 問題データセットの設定
 PROBLEM_FILE = DATA_ROOT / "coliee_train" / "riteval_R06_jp.xml"
@@ -53,7 +53,7 @@ CORPUS_FILE = DATA_ROOT / "coliee_corpus" / "civil.xml"
 JUNYO_FILE = SRC_ROOT / "junyo_mapping.json"
 
 # 出力ファイル設定
-OUTPUT_FILE = RESULTS_ROOT / "parameter_search_results.jsonl"
+OUTPUT_FILE = RESULTS_ROOT / "R06_parameter_search_results.jsonl"
 
 # プロンプト設定
 SYSTEM_PROMPT = """
@@ -417,11 +417,6 @@ def main(query_expand_num, base_query_num):
             },
         }
     }
-    if results["retrieval_summary"]["macro_f2"] > max_f2:
-        max_f2 = results["retrieval_summary"]["macro_f2"]
-        max_query_expand_num = query_expand_num
-        max_base_query_num = base_query_num
-
     
     # 結果をファイルに保存
     with open(OUTPUT_FILE, "a", encoding="utf-8") as f:
@@ -429,15 +424,4 @@ def main(query_expand_num, base_query_num):
 
 
 if __name__ == "__main__":
-    for i in range(3):
-        # ベースで取得する条文数とクエリ拡張のためにさらに取得する条文数の組み合わせを全て試す
-        for base_query_num in BASE_QUERY_NUM:
-            for query_expand_num in QUERY_EXPAND_NUM:
-                main(query_expand_num, base_query_num)
-        # 全ての組み合わせの実験が終わったら、結果ファイルを読み込んで最もF2スコアが高かった組み合わせを表示する
-        with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-            f.write(json.dumps({
-                "max_f2": max_f2,
-                "max_query_expand_num": max_query_expand_num,
-                "max_base_query_num": max_base_query_num,
-            }, ensure_ascii=False) + "\n")
+        main(query_expand_num=10, base_query_num=10)
