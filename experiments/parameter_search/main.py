@@ -37,14 +37,14 @@ from solve_problems_zeroshot import solve_zeroshot_problems
 MODEL_NAME = "llama4:128x17b"
 
 # ベースで取得する条文数設定
-BASE_QUERY_NUM = 10
+BASE_QUERY_NUM = [2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 # クエリ拡張のためにさらに取得する条文数設定
-QUERY_EXPAND_NUM = 10
+QUERY_EXPAND_NUM = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 # 問題データセットの設定
-PROBLEM_FILE = DATA_ROOT / "coliee_train" / "riteval_R06_jp.xml"
-REFERENCE_FILE = DATA_ROOT / "coliee_test" / "simple_R06_jp.xml"
+PROBLEM_FILE = DATA_ROOT / "coliee_train" / "riteval_R04_jp.xml"
+REFERENCE_FILE = DATA_ROOT / "coliee_test" / "simple_R04_jp.xml"
 
 # コーパスファイルの設定
 CORPUS_FILE = DATA_ROOT / "coliee_corpus" / "civil.xml"
@@ -53,7 +53,7 @@ CORPUS_FILE = DATA_ROOT / "coliee_corpus" / "civil.xml"
 JUNYO_FILE = SRC_ROOT / "junyo_mapping.json"
 
 # 出力ファイル設定
-OUTPUT_FILE = RESULTS_ROOT / "R06_parameter_search_results.jsonl"
+OUTPUT_FILE = RESULTS_ROOT / "R04_parameter_search_results.jsonl"
 
 # プロンプト設定
 SYSTEM_PROMPT = """
@@ -424,4 +424,6 @@ def main(query_expand_num, base_query_num):
 
 
 if __name__ == "__main__":
-        main(query_expand_num=10, base_query_num=10)
+    for base_query_num in BASE_QUERY_NUM:
+        for query_expand_num in QUERY_EXPAND_NUM:
+            main(query_expand_num=query_expand_num, base_query_num=base_query_num)

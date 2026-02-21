@@ -93,3 +93,4 @@
 {"query_expand_num": 3, "base_query_num": 10, "num_problems": 109, "retrieval_summary": {"macro_f2": 0.7329, "macro_precision": 0.7263, "macro_recall": 0.7523, "source_coverage": {"BM25": 0.8028, "LLMoutput": 0.055, "Junyo": 0.0138}}}
 {"query_expand_num": 4, "base_query_num": 10, "num_problems": 109, "retrieval_summary": {"macro_f2": 0.7386, "macro_precision": 0.7286, "macro_recall": 0.7615, "source_coverage": {"BM25": 0.8028, "LLMoutput": 0.055, "Junyo": 0.0138}}}
 {"query_expand_num": 5, "base_query_num": 10, "num_problems": 109, "retrieval_summary": {"macro_f2": 0.7469, "macro_precision": 0.7485, "macro_recall": 0.7661, "source_coverage": {"BM25": 0.8028, "LLMoutput": 0.055, "Junyo": 0.0138}}}
+{"query_expand_num": 6, "base_query_num": 10, "num_problems": 109, "retrieval_summary": {"macro_f2": 0.7407, "macro_precision": 0.7339, "macro_recall": 0.7569, "source_coverage": {"BM25": 0.8028, "LLMoutput": 0.0642, "Junyo": 0.0138}}}
