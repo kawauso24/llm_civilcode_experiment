@@ -43,8 +43,8 @@ def jsonl_to_csv(jsonl_path: str, csv_path: str):
     print(f"OK: {len(rows)} rows -> {csv_path}")
 
 def main():
-    jsonl_path = "/home/sakakibaragota/llm_civilcode_experiment/results/R05_parameter_search_results.jsonl"
-    csv_path = "/home/sakakibaragota/llm_civilcode_experiment/results/R05_parameter_search_results.csv"
+    jsonl_path = "/home/sakakibaragota/llm_civilcode_experiment/results/R04_parameter_search_results.jsonl"
+    csv_path = "/home/sakakibaragota/llm_civilcode_experiment/results/R04_parameter_search_results.csv"
     jsonl_to_csv(jsonl_path, csv_path)
 
 if __name__ == "__main__":
